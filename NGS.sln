@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NGS.Client", "NGS\Client\NG
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NGS.Shared", "NGS\Shared\NGS.Shared.csproj", "{09CDE1EF-EE45-4F2C-A8DB-4E815DBC42AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{DF9C2204-8329-4880-BA14-42ADF3F7961C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGS.Domain", "NGS\Domain\Domain.csproj", "{DF9C2204-8329-4880-BA14-42ADF3F7961C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
