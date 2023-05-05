@@ -1,9 +1,22 @@
+using Domain.Entities;
+using Domain.NGSContext;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddIdentity<User, Role>(option =>
+{
+    option.Password.RequireDigit = false;
+    option.Password.RequireLowercase = false;
+    option.Password.RequireNonAlphanumeric = false;
+    option.Password.RequireUppercase = false;
+    option.Password.RequireDigit = false;
+    option.Password.RequiredLength = 8;
+    option.User.RequireUniqueEmail = true;    
+}).AddEntityFrameworkStores<NGSContext>();
 
 var app = builder.Build();
 
