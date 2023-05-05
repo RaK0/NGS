@@ -1,6 +1,9 @@
 using Domain.Entities;
 using Domain.NGSContext;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +20,11 @@ builder.Services.AddIdentity<User, Role>(option =>
     option.Password.RequiredLength = 8;
     option.User.RequireUniqueEmail = true;    
 }).AddEntityFrameworkStores<NGSContext>();
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication();
+builder.Services.AddScoped<NGSContext>();
+builder.Services.AddDbContext<NGSContext>(options => options.UseSqlServer(builder.Configuration["Database:ConnectionString"]));
+
 
 var app = builder.Build();
 
