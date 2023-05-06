@@ -8,26 +8,26 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Images
+    public class Image
     {
         [Key]
         public Guid Id { get; set; }
-        public byte[]? Image { get; set; }
-        public string? UploadName { get; set; }
+        public byte[]? ImageData { get; set; }
+        public string UploadName { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime DeleteDate { get; set; }
         public DateTime AddDate { get; set; }
         public ImageSourcePossibility ImageSource { get; set; }
 
-        public Images()
+        public Image()
         {
             IsDeleted = false;
             AddDate = DateTime.Now;
         }
 
-        public Images(byte[] image, ImageSourcePossibility imageSource):this()
+        public Image(byte[] image, ImageSourcePossibility imageSource):this()
         {
-            Image = image;
+            ImageData = image;
             ImageSource = imageSource;
         }
     }
