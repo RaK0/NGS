@@ -17,6 +17,7 @@ namespace Domain.Entities
             Name = rankName;
             Description = rankDescription;
             Image = image;
+            NeedConfirm = true;
         }
     }
 }
