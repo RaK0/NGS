@@ -16,9 +16,11 @@ namespace Domain.Entities
         /// </summary>
         [NotMapped]
         public new static ICollection<Game>? Games => null;
+        public ICollection<User> Users { get; set; }
         public GameRank()
         {
             IsConfirm = false;
+            Users = new List<User>();
         }
 
         public GameRank(Game game, string rankName, string rankDescription, Image image) : this()
