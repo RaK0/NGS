@@ -8,6 +8,9 @@ namespace Domain.Consts
 {
     public enum ImageSourcePossibility
     {
-
+        Icon,
+        Post,
+        Topic,
+        Message
     }
 }
