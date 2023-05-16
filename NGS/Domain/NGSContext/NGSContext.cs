@@ -24,6 +24,7 @@ namespace Domain.NGSContext
         public DbSet<GameRole> GameRoles { get; set; }
         public DbSet<GameRank> GameRanks { get; set; }
         public DbSet<Slider> Sliders { get; set; }
+        public DbSet<Section> Sections { get; set; }
 
 
         public NGSContext(DbContextOptions<NGSContext> options) : base(options)
@@ -44,7 +45,11 @@ namespace Domain.NGSContext
                 .HasDiscriminator<string>("StuffType")
                 .HasValue<GameRole>("GameRole")
                 .HasValue<GameRank>("GameRank");
-                
+
+            builder.Entity<Section>()
+                .Property("Discriminator")
+                .HasMaxLength(200);
+
         }
     }
 }
