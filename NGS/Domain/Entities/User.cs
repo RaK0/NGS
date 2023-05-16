@@ -9,5 +9,7 @@ namespace Domain.Entities
 {
     public class User : IdentityUser<Guid>
     {
+        public Image Avatar { get; set; }
+        public Image Background { get; set; }
     }
 }
