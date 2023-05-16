@@ -14,7 +14,8 @@ namespace Domain.Entities.Base
         public string Name { get; set; }
         public string Description { get; set; }
         public Image Image { get; set; }
-        public Game Game { get; set; }
+        public virtual ICollection<Game> Games { get; set; }
+        public virtual Game Game { get; set; }
         public virtual bool IsConfirm { get; set; }
     }
 }
