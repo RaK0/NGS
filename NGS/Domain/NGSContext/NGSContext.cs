@@ -16,6 +16,7 @@ namespace Domain.NGSContext
         public DbSet<Image> Images { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<Game> Games { get; set; }
 
         public NGSContext(DbContextOptions<NGSContext> options) : base(options)
         { }
