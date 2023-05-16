@@ -17,8 +17,8 @@ namespace Domain.Entities.Base
         public bool IsDeleted { get; set; }
         public bool IsHidden { get; set; }
         public bool IsPined { get; set; }
-        public Image Icon { get; set; }   
+        public virtual Image? Icon { get; set; }   
         //Under using for seting display position, if under null is first position 
-        public Section? DisplayUnder { get; set; }
+        public virtual Section? DisplayUnder { get; set; }
     }
 }

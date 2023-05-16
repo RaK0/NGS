@@ -14,22 +14,22 @@ using System.Threading.Tasks;
 namespace Domain.NGSContext
 {
     public class NGSContext : IdentityDbContext<
-        User, Role, Guid, IdentityUserClaim<Guid>, UserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
+        User, Role, Guid>
     {
-        public DbSet<Image> Images { get; set; }
-        public DbSet<Message> Messages { get; set; }
-        public DbSet<Conversation> Conversations { get; set; }
-        public DbSet<Game> Games { get; set; }
-        public DbSet<GameStuff> GameStuffs { get; set; }
-        public DbSet<GameRole> GameRoles { get; set; }
-        public DbSet<GameRank> GameRanks { get; set; }
-        public DbSet<Slider> Sliders { get; set; }
-        public DbSet<Section> Sections { get; set; }
-        public DbSet<MainSection> MainSections { get; set; }
-        public DbSet<GameTeam> GameTeams { get; set; }
-        public DbSet<Invitation> Invations { get; set; }
-        public DbSet<GameTeamInvitation> GameTeamInvitations { get; set; }
-        public DbSet<SiteConfiguration> SiteConfiguration { get; set; }
+        public DbSet<Image> Images =>Set<Image>();
+        public DbSet<Message> Messages => Set<Message>();
+        public DbSet<Conversation> Conversations => Set<Conversation>();
+        public DbSet<Game> Games => Set<Game>();
+        public DbSet<GameStuff> GameStuffs => Set<GameStuff>();
+        public DbSet<GameRole> GameRoles => Set<GameRole>();
+        public DbSet<GameRank> GameRanks => Set<GameRank>();
+        public DbSet<Slider> Sliders => Set<Slider>();
+        public DbSet<Section> Sections => Set<Section>();
+        public DbSet<MainSection> MainSections => Set<MainSection>();
+        public DbSet<GameTeam> GameTeams => Set<GameTeam>();
+        public DbSet<Invitation> Invations => Set<Invitation>();
+        public DbSet<GameTeamInvitation> GameTeamInvitations => Set<GameTeamInvitation>();
+        public DbSet<SiteConfiguration> SiteConfiguration => Set<SiteConfiguration>();
 
 
         public NGSContext(DbContextOptions<NGSContext> options) : base(options)
@@ -37,7 +37,7 @@ namespace Domain.NGSContext
         
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(builder);            
 
             builder.Entity<Image>()
                 .Property(e => e.ImageSource)

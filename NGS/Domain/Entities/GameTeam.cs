@@ -12,9 +12,9 @@ namespace Domain.Entities
 {
     public class GameTeam : GameStuff
     {
-        public User Creator { get; set; }
-        public ICollection<User> Members { get; set; }
-        public ICollection<GameTeamInvitation> GameTeamInvitations { get; set; }
+        public virtual User Creator { get; set; }
+        public virtual ICollection<User> Members { get; set; }
+        public virtual ICollection<GameTeamInvitation> GameTeamInvitations { get; set; }
         /// <summary>
         /// Not in use, always null
         /// </summary>

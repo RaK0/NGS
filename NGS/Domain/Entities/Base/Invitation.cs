@@ -11,8 +11,8 @@ namespace Domain.Entities.Base
     {
         [Key]
         public Guid Id { get; set; }
-        public User UserInvited { get; set; }
-        public User CreatorOfInvite { get; set; }
+        public virtual User? UserInvited { get; set; }
+        public virtual User? CreatorOfInvite { get; set; }
         public bool? Accepted { get; set; }
         public bool? PreventFromNextInvite { get; set; }
         public DateTime DateSend { get; set; }

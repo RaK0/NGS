@@ -16,8 +16,8 @@ namespace Domain.Entities
         public bool IsDeleted { get; set; }
         public DateTime DeleteDate { get; set; }
         public bool IsReported { get; set; }
-        public ICollection<Image>? Images { get; set; }
-        public User? Owner { get; set; }
+        public virtual ICollection<Image>? Images { get; set; }
+        public virtual User? Owner { get; set; }
 
         public Message()
         {

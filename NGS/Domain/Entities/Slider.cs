@@ -13,9 +13,9 @@ namespace Domain.Entities
     {
         [Key]
         public Guid Id { get; set; }
-        public Image Image { get; set; }
+        public virtual Image Image { get; set; }
         public string Url { get; set; }
-        public User Adder { get; set; }
+        public virtual User Adder { get; set; }
         public DateTime CreateDate { get; set; }
         public int Position { get; set; }
         public DateTime? ShowAfter { get; set; }

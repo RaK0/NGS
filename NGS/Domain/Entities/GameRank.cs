@@ -16,7 +16,7 @@ namespace Domain.Entities
         /// </summary>
         [NotMapped]
         public new static ICollection<Game>? Games => null;
-        public ICollection<User> Users { get; set; }
+        public virtual ICollection<User> Users { get; set; }
         public GameRank()
         {
             IsConfirm = false;

@@ -10,7 +10,7 @@ namespace Domain.Entities
 {
     public class GameTeamInvitation : Invitation
     {
-        public GameTeam Team { get; set; }
+        public virtual GameTeam Team { get; set; }
         public GameTeamInvitation()
         {
             DateSend = DateTime.Now;

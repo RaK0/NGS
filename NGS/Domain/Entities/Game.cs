@@ -18,7 +18,7 @@ namespace Domain.Entities
         public Games GameType { get; set; }
         public DateTime CreateTime { get; set; }
         public bool IsDisabled { get; set; }
-        public Image Icon { get; set; }
+        public virtual Image? Icon { get; set; }
         
         public Game()
         {
