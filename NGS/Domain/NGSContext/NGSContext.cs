@@ -25,6 +25,10 @@ namespace Domain.NGSContext
         public DbSet<GameRank> GameRanks { get; set; }
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Section> Sections { get; set; }
+        public DbSet<MainSection> MainSections { get; set; }
+        public DbSet<GameTeam> GameTeams { get; set; }
+        public DbSet<Invitation> Invations { get; set; }
+        public DbSet<GameTeamInvitation> GameTeamInvitations { get; set; }
         public DbSet<SiteConfiguration> SiteConfiguration { get; set; }
 
 
@@ -50,7 +54,16 @@ namespace Domain.NGSContext
             builder.Entity<Section>()
                 .Property("Discriminator")
                 .HasMaxLength(200);
+            builder.Entity<Section>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue<MainSection>("MainSection");
 
+            builder.Entity<Invitation>()
+                .Property("Discriminator")
+                .HasMaxLength(200);
+            builder.Entity<Invitation>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue<GameTeamInvitation>("GameTeam");
         }
     }
 }
