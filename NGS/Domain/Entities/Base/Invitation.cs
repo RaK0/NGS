@@ -15,5 +15,6 @@ namespace Domain.Entities.Base
         public User CreatorOfInvite { get; set; }
         public bool? Accepted { get; set; }
         public bool? PreventFromNextInvite { get; set; }
+        public DateTime DateSend { get; set; }
     }
 }
