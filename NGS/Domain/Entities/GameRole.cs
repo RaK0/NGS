@@ -12,7 +12,7 @@ namespace Domain.Entities
     public class GameRole : GameStuff
     {
         [NotMapped]
-        public override bool NeedConfirm => false;
+        public override bool IsConfirm => true;
         public GameRole() { }
 
         public GameRole(Game game, string roleName, string roleDescription, Image image)
