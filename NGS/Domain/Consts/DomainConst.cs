@@ -11,6 +11,7 @@ namespace Domain.Consts
         Icon,
         Post,
         Topic,
-        Message
+        Message,
+        Avatar
     }
 }
