@@ -12,6 +12,7 @@ namespace Domain.Consts
         Post,
         Topic,
         Message,
-        Avatar
+        Avatar,
+        ProfileBackground
     }
 }
