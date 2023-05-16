@@ -23,6 +23,7 @@ namespace Domain.NGSContext
         public DbSet<GameStuff> GameStuffs { get; set; }
         public DbSet<GameRole> GameRoles { get; set; }
         public DbSet<GameRank> GameRanks { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
 
 
         public NGSContext(DbContextOptions<NGSContext> options) : base(options)
