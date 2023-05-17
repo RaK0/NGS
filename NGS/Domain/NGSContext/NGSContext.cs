@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.NGSContext
+namespace Domain.NGSContextName
 {
     public class NGSContext : IdentityDbContext<
         User, Role, Guid>
@@ -37,7 +37,16 @@ namespace Domain.NGSContext
         
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);            
+            base.OnModelCreating(builder);
+
+            builder.Entity<User>(u =>
+            {
+                u.HasMany(x => x.InvitationsSend)
+                .WithOne(x => x.CreatorOfInvite);
+
+                u.HasMany(x => x.InvitationsReceive)
+                .WithOne(x => x.UserInvited);
+            });
 
             builder.Entity<Image>()
                 .Property(e => e.ImageSource)
@@ -64,6 +73,7 @@ namespace Domain.NGSContext
             builder.Entity<Invitation>()
                 .HasDiscriminator<string>("Discriminator")
                 .HasValue<GameTeamInvitation>("GameTeam");
+
         }
     }
 }
