@@ -14,23 +14,30 @@ namespace Domain.Entities
     {
         [NotMapped]
         public override bool IsConfirm => true;
-        /// <summary>
-        /// Not in use, always null
-        /// </summary>
-        [NotMapped]
-        public new static ICollection<Game>? Games => null;
-        public GameRole() { }
+        [MaxLength(1)]
+        public override ICollection<Game> Games { get; set; }
+        public GameRole()
+        {
+            Users = new List<User>();
+            Games = new List<Game>();
+        }
 
         public GameRole(Game game, string roleName, string roleDescription, Image image)
         {
-            Game = game;
+            Games = new List<Game>
+            {
+                game
+            };
             Name = roleName;
             Description = roleDescription;
             Image = image;
         }
         public GameRole(Game game, string roleName, string roleDescription, byte[] image)
         {
-            Game = game;
+            Games = new List<Game>
+            {
+                game
+            };
             Name = roleName;
             Description = roleDescription;
             Image = new(image, ImageSourcePossibility.Icon);

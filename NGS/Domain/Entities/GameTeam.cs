@@ -13,13 +13,7 @@ namespace Domain.Entities
     public class GameTeam : GameStuff
     {
         public virtual User Creator { get; set; }
-        public virtual ICollection<User> Members { get; set; }
-        public virtual ICollection<GameTeamInvitation> GameTeamInvitations { get; set; }
-        /// <summary>
-        /// Not in use, always null
-        /// </summary>
-        [NotMapped]
-        public new static Game? Game => null;
+        public virtual ICollection<GameTeamInvitation> GameTeamInvitations { get; set; }                
         public DateTime CreateDate { get; set; }
         /// <summary>
         /// Not in use, always null
@@ -30,7 +24,7 @@ namespace Domain.Entities
         public GameTeam() 
         {
             CreateDate = DateTime.Now;
-            Members = new List<User>();
+            Users = new List<User>();
             GameTeamInvitations = new List<GameTeamInvitation>();
             Games = new List<Game>();
         }

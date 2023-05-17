@@ -2,6 +2,7 @@
 using Domain.Entities.Base;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -11,21 +12,21 @@ namespace Domain.Entities
 {
     public class GameRank : GameStuff
     {
-        /// <summary>
-        /// Not in use, always null
-        /// </summary>
-        [NotMapped]
-        public new static ICollection<Game>? Games => null;
-        public virtual ICollection<User> Users { get; set; }
+        [MaxLength(1)]
+        public override ICollection<Game> Games { get; set; }
         public GameRank()
         {
             IsConfirm = false;
             Users = new List<User>();
+            Games = new List<Game>();
         }
 
         public GameRank(Game game, string rankName, string rankDescription, Image image) : this()
         {
-            Game = game;
+            Games = new List<Game>
+            {
+                game
+            };
             Name = rankName;
             Description = rankDescription;
             Image = image;
@@ -33,7 +34,10 @@ namespace Domain.Entities
         }
         public GameRank(Game game, string rankName, string rankDescription, byte[] image) : this()
         {
-            Game = game;
+            Games = new List<Game>
+            {
+                game
+            };
             Name = rankName;
             Description = rankDescription;
             Image = new(image, ImageSourcePossibility.Icon);
