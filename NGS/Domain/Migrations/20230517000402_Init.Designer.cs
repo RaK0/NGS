@@ -4,16 +4,19 @@ using Domain.NGSContextName;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace Domain.Migrations
 {
-    [DbContext(typeof(NGSContext))]
-    partial class NGSContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(NGSContextName.NGSContext))]
+    [Migration("20230517000402_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -675,11 +678,11 @@ namespace Domain.Migrations
             modelBuilder.Entity("Domain.Entities.Base.Invitation", b =>
                 {
                     b.HasOne("Domain.Entities.User", "CreatorOfInvite")
-                        .WithMany("InvitationsSend")
+                        .WithMany()
                         .HasForeignKey("CreatorOfInviteId");
 
                     b.HasOne("Domain.Entities.User", "UserInvited")
-                        .WithMany("InvitationsReceive")
+                        .WithMany()
                         .HasForeignKey("UserInvitedId");
 
                     b.Navigation("CreatorOfInvite");
@@ -800,7 +803,7 @@ namespace Domain.Migrations
                     b.HasOne("Domain.Entities.Base.GameStuff", null)
                         .WithMany()
                         .HasForeignKey("GameStuffsId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.User", null)
@@ -906,13 +909,6 @@ namespace Domain.Migrations
             modelBuilder.Entity("Domain.Entities.Message", b =>
                 {
                     b.Navigation("Images");
-                });
-
-            modelBuilder.Entity("Domain.Entities.User", b =>
-                {
-                    b.Navigation("InvitationsReceive");
-
-                    b.Navigation("InvitationsSend");
                 });
 
             modelBuilder.Entity("Domain.Entities.GameTeam", b =>

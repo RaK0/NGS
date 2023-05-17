@@ -116,8 +116,6 @@ namespace Domain.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AvatarId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     BackgroundId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GameRankId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GameTeamId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -237,6 +235,58 @@ namespace Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Games",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GameName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GameType = table.Column<int>(type: "int", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDisabled = table.Column<bool>(type: "bit", nullable: false),
+                    IconId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Games", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Games_Images_IconId",
+                        column: x => x.IconId,
+                        principalTable: "Images",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GameStuffs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsConfirm = table.Column<bool>(type: "bit", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    StuffType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameStuffs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GameStuffs_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GameStuffs_Images_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Images",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sections",
                 columns: table => new
                 {
@@ -300,63 +350,75 @@ namespace Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Games",
+                name: "GameUser",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GameName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GameType = table.Column<int>(type: "int", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDisabled = table.Column<bool>(type: "bit", nullable: false),
-                    IconId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GameStuffId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    GamesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Games", x => x.Id);
+                    table.PrimaryKey("PK_GameUser", x => new { x.GamesId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_Games_Images_IconId",
-                        column: x => x.IconId,
-                        principalTable: "Images",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GameStuffs",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GameId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsConfirm = table.Column<bool>(type: "bit", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    StuffType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GameStuffs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_GameStuffs_AspNetUsers_CreatorId",
-                        column: x => x.CreatorId,
+                        name: "FK_GameUser_AspNetUsers_UsersId",
+                        column: x => x.UsersId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GameStuffs_Games_GameId",
-                        column: x => x.GameId,
+                        name: "FK_GameUser_Games_GamesId",
+                        column: x => x.GamesId,
                         principalTable: "Games",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GameGameStuff",
+                columns: table => new
+                {
+                    GamesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StuffsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameGameStuff", x => new { x.GamesId, x.StuffsId });
                     table.ForeignKey(
-                        name: "FK_GameStuffs_Images_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Images",
-                        principalColumn: "Id");
+                        name: "FK_GameGameStuff_GameStuffs_StuffsId",
+                        column: x => x.StuffsId,
+                        principalTable: "GameStuffs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GameGameStuff_Games_GamesId",
+                        column: x => x.GamesId,
+                        principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GameStuffUser",
+                columns: table => new
+                {
+                    GameStuffsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameStuffUser", x => new { x.GameStuffsId, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_GameStuffUser_AspNetUsers_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_GameStuffUser_GameStuffs_GameStuffsId",
+                        column: x => x.GameStuffsId,
+                        principalTable: "GameStuffs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -436,16 +498,6 @@ namespace Domain.Migrations
                 column: "BackgroundId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_GameRankId",
-                table: "AspNetUsers",
-                column: "GameRankId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_GameTeamId",
-                table: "AspNetUsers",
-                column: "GameTeamId");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -463,9 +515,9 @@ namespace Domain.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Games_GameStuffId",
-                table: "Games",
-                column: "GameStuffId");
+                name: "IX_GameGameStuff_StuffsId",
+                table: "GameGameStuff",
+                column: "StuffsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Games_IconId",
@@ -478,14 +530,19 @@ namespace Domain.Migrations
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GameStuffs_GameId",
-                table: "GameStuffs",
-                column: "GameId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_GameStuffs_ImageId",
                 table: "GameStuffs",
                 column: "ImageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameStuffUser_UsersId",
+                table: "GameStuffUser",
+                column: "UsersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameUser_UsersId",
+                table: "GameUser",
+                column: "UsersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Images_MessageId",
@@ -562,20 +619,6 @@ namespace Domain.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUsers_GameStuffs_GameRankId",
-                table: "AspNetUsers",
-                column: "GameRankId",
-                principalTable: "GameStuffs",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUsers_GameStuffs_GameTeamId",
-                table: "AspNetUsers",
-                column: "GameTeamId",
-                principalTable: "GameStuffs",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_AspNetUsers_Images_AvatarId",
                 table: "AspNetUsers",
                 column: "AvatarId",
@@ -587,13 +630,6 @@ namespace Domain.Migrations
                 table: "AspNetUsers",
                 column: "BackgroundId",
                 principalTable: "Images",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Games_GameStuffs_GameStuffId",
-                table: "Games",
-                column: "GameStuffId",
-                principalTable: "GameStuffs",
                 principalColumn: "Id");
         }
 
@@ -609,16 +645,8 @@ namespace Domain.Migrations
                 table: "Conversations");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_GameStuffs_AspNetUsers_CreatorId",
-                table: "GameStuffs");
-
-            migrationBuilder.DropForeignKey(
                 name: "FK_Messages_AspNetUsers_OwnerId",
                 table: "Messages");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Games_GameStuffs_GameStuffId",
-                table: "Games");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -636,6 +664,15 @@ namespace Domain.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "GameGameStuff");
+
+            migrationBuilder.DropTable(
+                name: "GameStuffUser");
+
+            migrationBuilder.DropTable(
+                name: "GameUser");
+
+            migrationBuilder.DropTable(
                 name: "Invations");
 
             migrationBuilder.DropTable(
@@ -651,13 +688,13 @@ namespace Domain.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Games");
 
             migrationBuilder.DropTable(
                 name: "GameStuffs");
 
             migrationBuilder.DropTable(
-                name: "Games");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Images");
